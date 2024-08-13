@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Seat Reservation System</title>
+</head>
+<body>
+<h1>Seat Reservation System</h1>
+<p>There are <span th:text="${remainingSeats}"></span> remaining seats</p>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>A</th>
+        <th>B</th>
+        <th>C</th>
+        <th>D</th>
+        <th>E</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${seats['1A']} ?: '1A'"></td>
+        <td th:text="${seats['1B']} ?: '1B'"></td>
+        <td th:text="${seats['1C']} ?: '1C'"></td>
+        <td th:text="${seats['1D']} ?: '1D'"></td>
+        <td th:text="${seats['1E']} ?: '1E'"></td>
+    </tr>
+    <tr>
+        <td th:text="${seats['2A']} ?: '2A'"></td>
+        <td th:text="${seats['2B']} ?: '2B'"></td>
+        <td th:text="${seats['2C']} ?: '2C'"></td>
+        <td th:text="${seats['2D']} ?: '2D'"></td>
+        <td th:text="${seats['2E']} ?: '2E'"></td>
+    </tr>
+    <tr>
+        <td th:text="${seats['3A']} ?: '3A'"></td>
+        <td th:text="${seats['3B']} ?: '3B'"></td>
+        <td th:text="${seats['3C']} ?: '3C'"></td>
+        <td th:text="${seats['3D']} ?: '3D'"></td>
+        <td th:text="${seats['3E']} ?: '3E'"></td>
+    </tr>
+    <tr>
+        <td th:text="${seats['4A']} ?: '4A'"></td>
+        <td th:text="${seats['4B']} ?: '4B'"></td>
+        <td th:text="${seats['4C']} ?: '4C'"></td>
+        <td th:text="${seats['4D']} ?: '4D'"></td>
+        <td th:text="${seats['4E']} ?: '4E'"></td>
+    </tr>
+    </tbody>
+</table>
+
+<br/><br/>
+
+<form th:action="@{/saveCustomer}" th:object="${customer}" method="post">
+    <label for="seatno">Seat Code:</label>
+    <input type="text" id="seatno" th:field="*{seatno}" required/><br/>
+    <label for="name">Customer Name:</label>
+    <input type="text" id="name" th:field="*{name}" required/><br/>
+    <label for="tdate">Transaction Date:</label>
+    <input type="date" id="tdate" th:field="*{tdate}" required/><br/><br/>
+    <button type="submit">Reserve</button>
+</form>
+
+<br/>
+
+<h2>Reserved Seats</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Transaction ID</th>
+        <th>Date</th>
+        <th>Seat Number</th>
+        <th>Customer Name</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customer : ${listCustomers}">
+        <td th:text="${customer.id}"></td>
+        <td th:text="${customer.tdate}"></td>
+        <td th:text="${customer.seatno}"></td>
+        <td th:text="${customer.name}"></td>
+        <td>
+            <a th:href="@{/showFormForUpdate/{id}(id=${customer.id})}">Edit</a> |
+            <a th:href="@{/deleteCustomer/{id}(id=${customer.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+
